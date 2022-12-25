@@ -15,7 +15,7 @@ public class BookSenderTest {
     // tag::test[]
     @Test
     public void testBookSender() {
-        try (KafkaContainer container = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka"))) {
+        try (KafkaContainer container = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.0.4.arm64"))) {
             container.start();
             Map<String, Object> config = Collections.singletonMap( // <1>
                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,

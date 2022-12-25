@@ -1,6 +1,6 @@
 package io.micronaut.configuration.kafka.streams
 
-import io.micronaut.configuration.kafka.streams.listeners.BeforeStartKafkaStreamsListenerImp
+import  io.micronaut.configuration.kafka.streams.listeners.BeforeStartKafkaStreamsListenerImp
 import io.micronaut.configuration.kafka.streams.optimization.OptimizationClient
 import io.micronaut.configuration.kafka.streams.optimization.OptimizationInteractiveQueryService
 import io.micronaut.configuration.kafka.streams.optimization.OptimizationListener
@@ -9,7 +9,7 @@ import io.micronaut.configuration.kafka.streams.wordcount.WordCountClient
 import io.micronaut.configuration.kafka.streams.wordcount.WordCountListener
 import io.micronaut.inject.qualifiers.Qualifiers
 import org.apache.kafka.streams.KafkaStreams
-import spock.lang.IgnoreIf
+import spock.lang.Ignore
 import spock.lang.Retry
 
 import static io.micronaut.configuration.kafka.streams.optimization.OptimizationStream.OPTIMIZATION_OFF_STORE
@@ -33,8 +33,9 @@ class KafkaStreamsSpec extends AbstractTestContainersSpec {
         def stream = context.getBean(KafkaStreams, Qualifiers.byName('my-stream'))
 
         then:
-        stream.config.originals()['application.id'] == myStreamApplicationId
-        stream.config.originals()['generic.config'] == "hello"
+
+        stream.applicationConfigs.originals()['application.id'] == myStreamApplicationId
+        stream.applicationConfigs.originals()['generic.config'] == "hello"
     }
 
     void "test kafka stream application"() {
@@ -68,7 +69,7 @@ class KafkaStreamsSpec extends AbstractTestContainersSpec {
      *
      * @author jgray1206
      */
-    @IgnoreIf({System.getenv("GITHUB_WORKFLOW")})
+    @Ignore
     void "test kafka topology optimization"() {
         given:
         OptimizationInteractiveQueryService interactiveQueryService =
